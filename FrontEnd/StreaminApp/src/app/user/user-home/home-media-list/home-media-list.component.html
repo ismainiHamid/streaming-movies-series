@@ -1,0 +1,45 @@
+<div class="main-info">
+  <h3 class="main-title">Last movies</h3>
+
+  <div class="main-nav">
+    <button class="me-1" (click)="prev()">
+      <i class="zmdi zmdi-chevron-left"></i>
+    </button>
+
+    <button class="ms-1" (click)="next()">
+      <i class="zmdi zmdi-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
+<div class="main-items">
+  <owl-carousel-o [options]="customOptions" #owlCarousel>
+    <ng-container *ngFor="let movie of moviesDataSource">
+      <ng-template carouselSlide>
+        <a role="link" [routerLink]="'/details'" [queryParams]="{q: movie.id}"
+           [class.link-disabled]="!hasMasterFile(movie.masterFile ?? '')"
+           aria-hidden="true" class="rounded-1">
+
+          <div *ngIf="!movie.isPosterLoaded" class="placeholder rounded-1 placeholder-wave bg-secondary">
+          </div>
+
+          <div *ngIf="movie.isPosterLoaded" class="poster position-relative">
+            <img
+              [src]="movie.poster"
+              (error)="onError($event)"
+              loading="lazy"
+              class="lazy-image rounded-1"
+              alt="Movie Thumbnail">
+
+            <span class="badge rounded-bottom-1 rounded-top-0" *ngIf="!hasMasterFile(movie.masterFile ?? '')">
+              COMING SOON
+            </span>
+          </div>
+
+        </a>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+</div>
+
+

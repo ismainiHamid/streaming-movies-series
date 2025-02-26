@@ -1,0 +1,35 @@
+.progress {
+  height: 12px;
+  font-size: 7px;
+  border-radius: 2px !important;
+  background-color: var(--bs-gray-300);
+}
+
+.progress span {
+  position: absolute;
+  top: -.2rem;
+  left: 0;
+  right: 0;
+  color: rgba(0, 0, 0, .75);
+}
+
+.btn-primary {
+  border-color: rgba(0, 178, 255, 1) !important;
+  background-color: rgba(0, 178, 255, 1) !important;
+}
+
+.btn-primary:hover {
+  background-color: rgba(0, 161, 255, 1) !important;
+}
+
+.spinner-border {
+  --bs-spinner-width: 1rem !important;
+  --bs-spinner-height: 1rem !important;
+  --bs-spinner-border-width: 0.15em !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}

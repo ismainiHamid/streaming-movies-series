@@ -1,0 +1,42 @@
+server:
+  port: 7070
+  servlet:
+    context-path: /cinewave/api
+
+springdoc:
+  swagger-ui:
+    path: /api-docs
+
+spring:
+  application:
+    name: UploadService
+  datasource:
+    url: jdbc:postgresql://localhost:5432/streaming_db
+    username: postgres
+    password: 1997
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 150GB
+      max-request-size: 150GB
+  devtools:
+    livereload:
+      port: 35730
+
+minio:
+  config:
+    url: http://localhost:9000
+    access-key: 2DamQRBFPhuYvKNOKUij
+    secret-key: e9Uz5guw9Pc1BtNOVZhEtpHN3dqm1F66WJumwr6A
+    bucket-name: streaming-bucket
+
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+    com.zaxxer.hikari: DEBUG
+    org.hibernate.orm.connections.pooling: OFF

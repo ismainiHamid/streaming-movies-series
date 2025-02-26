@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg fixed-top" [ngClass]="{ 'scrolled': isScrolled }"
+     data-bs-theme="dark">
+  <div class="container">
+    <a class="navbar-brand pe-5" routerLink="/">
+      C <span>ineWave</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav w-100 m-auto">
+        <div class="navbar-search w-100">
+          <div class="search-bar position-relative">
+            <input class="form-control form-control-md rounded-1 w-100 pe-5" type="search"
+                   (input)="applyFilter()" placeholder="Search in CineWave"
+                   aria-label="Search" #filter>
+            <i class="zmdi zmdi-search"></i>
+          </div>
+          <div class="search-result rounded-1 shadow" *ngIf="isSearch">
+            <div class="row w-100 m-auto">
+
+              <div class="col-12" *ngIf="medias.length === 0">
+                <p class="m-0 text-center p-4 text-white" style="font-size: 20px; font-weight: 500;">Not data found</p>
+              </div>
+
+              <div class="col-12 p-0" *ngFor="let media of medias; let i = index;">
+                <div class="card p-2 rounded-0" role="link" [routerLink]="'/details'"
+                     [queryParams]="{q: media.id}" [class.border]="i !== medias.length - 1">
+                  <div class="row">
+                    <div style="width: 80px;" aria-hidden="true">
+                      <div *ngIf="!media.isPosterLoaded" class="placeholder rounded-1 placeholder-wave bg-secondary">
+                      </div>
+
+                      <div *ngIf="media.isPosterLoaded" class="poster position-relative">
+                        <img
+                          [src]="media.poster"
+                          (error)="onError($event)"
+                          loading="lazy"
+                          class="lazy-image rounded-1"
+                          alt="Media poster">
+                      </div>
+                    </div>
+
+                    <div class="col ps-0">
+                      <h6 class="mb-0 card-title">{{ media.title }} ({{ media.released | date: 'yyyy' }})</h6>
+                      <p class="mb-0 card-type">{{ media.type }}</p>
+                      <p class="m-0 card-actor">
+                        <span *ngFor="let actor of media.actors; let i = index;">
+                          {{ actor.name }}<span *ngIf="i < (media.actors?.length ?? 1) - 1">,</span>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-nav ps-5">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a class="nav-link" href="#">Movies</a>
+        <a class="nav-link" href="#">Series</a>
+        <a class="nav-link" href="#">Tips</a>
+      </div>
+
+      <div class="navbar-nav ps-3">
+        <a class="btn btn-primary btn-sm rounded-1" href="#">
+          <i class="zmdi zmdi-account-o pe-2"></i>Account</a>
+      </div>
+    </div>
+  </div>
+</nav>

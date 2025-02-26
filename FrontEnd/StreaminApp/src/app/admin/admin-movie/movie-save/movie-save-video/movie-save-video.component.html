@@ -1,0 +1,79 @@
+<div class="modal-header border-0 d-flex flex-wrap justify-content-between align-content-center">
+  <nav class="nav">
+    <p class="nav-link done"><span><i class="zmdi zmdi-check-all"></i></span>Information</p>
+    <p class="nav-link done"><span><i class="zmdi zmdi-check-all"></i></span>Assignment</p>
+    <p class="nav-link done"><span><i class="zmdi zmdi-check-all"></i></span>Subtitles</p>
+    <p class="nav-link active"><span><i class="zmdi zmdi-check-all"></i></span>Upload</p>
+  </nav>
+  <button type="button" class="btn btn rounded-circle modal-btn-close border-0 p-1"
+          (click)="closeModal()">
+    <i class="zmdi zmdi-close"></i>
+  </button>
+</div>
+
+<form (ngSubmit)="ngSubmit()" [formGroup]="formGroup">
+  <div class="modal-body">
+    <div class="body-content">
+      <div class="row" [class.div-disabled]="isLoading">
+        <div class="file-upload-container"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event)"
+             [class.dragging]="isDragging">
+          <label for="video-poster" class="file-upload">
+            <div *ngIf="fileName.length === 0">
+              <div class="upload-icon mb-2">
+                <i class="zmdi zmdi-upload"></i>
+              </div>
+              <span>Drag & Drop your file here or <strong>Click to Upload</strong></span>
+              <p class="upload-error text-danger" *ngIf="extension !== '' && extension !== '.mp4'">
+                The file you try to upload is not '.mp4'.
+              </p>
+              <input type="file"
+                     id="video-poster"
+                     accept="video/mp4"
+                     name="file"
+                     formControlName="file"
+                     (change)="onFileSelected($event)" required/>
+            </div>
+
+            <div *ngIf="fileName.length > 0">
+              <div class="card shadow-sm">
+                <div class="card-close">
+                  <button class="btn border-0" (click)="onCloseCard()" [disabled]="isLoading">
+                    <i class="zmdi zmdi-close"></i>
+                  </button>
+                </div>
+
+                <div class="card-content">
+                  <div class="card-icon">
+                    <i class="zmdi zmdi-movie"></i>
+                  </div>
+                  <p class="m-0">
+                    {{ (fileName | truncate:30) }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer border-0 d-flex flex-wrap justify-content-end gap-2 align-content-center">
+    <button type="reset" class="btn btn-danger btn-sm border-0 px-4" (click)="onRestForm()">
+      <i class="bi bi-arrow-clockwise pe-2"></i>Reset
+    </button>
+
+    <button type="submit" class="btn btn-primary btn-sm border-0 px-4" [disabled]="!isFormValid() || isLoading">
+      <span *ngIf="!isLoading"><i class="bi bi-floppy pe-2"></i>Save</span>
+      <span *ngIf="isLoading">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </span>
+    </button>
+  </div>
+</form>
+

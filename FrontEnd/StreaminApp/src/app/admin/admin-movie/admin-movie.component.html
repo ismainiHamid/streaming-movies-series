@@ -1,0 +1,143 @@
+<div class="row g-2 mb-3">
+  <div class="col-12">
+    <div class="d-flex flex-row align-items-center">
+      <div class="position-relative w-100">
+        <input type="search" class="form-control rounded-start-1 rounded-end-0 input-filter"
+               (input)="applyFilter($event)" placeholder="Filter by title...">
+      </div>
+      <button class="rounded-start-0 rounded-end-1 btn btn-primary px-4" role="link" routerLink="/admin/movies/save">
+        <i class="zmdi zmdi-plus"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="mat-elevation-z8 shadow-none border-1 position-relative">
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner-border text-dark-emphasis" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="table table-borderless table-striped table-hover table-sm m-0">
+    <ng-container matColumnDef="poster">
+      <th mat-header-cell *matHeaderCellDef>Poster</th>
+      <td mat-cell *matCellDef="let row" style="width: 5%;" class="text-center px-3">
+        <div class="rounded-1 shadow-sm" aria-hidden="true">
+
+          <div *ngIf="!row.isPosterLoaded" class="placeholder rounded-1 placeholder-wave bg-secondary"
+               style="width: 55px; height: 77px;">
+          </div>
+
+          <img
+            *ngIf="row.isPosterLoaded"
+            [src]="row.poster"
+            (error)="onError($event)"
+            loading="lazy"
+            class="lazy-image rounded-1"
+            alt="Movie Thumbnail"
+            style="width: 55px; height: 77px;">
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let row" class="text-center text-capitalize"> {{ row.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="released">
+      <th mat-header-cell *matHeaderCellDef>Released</th>
+      <td mat-cell *matCellDef="let row" class="text-center">{{ row.released }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="runtime">
+      <th mat-header-cell *matHeaderCellDef>Runtime</th>
+      <td mat-cell *matCellDef="let row" class="text-center">{{ row.runtime }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="director">
+      <th mat-header-cell *matHeaderCellDef>Director</th>
+      <td mat-cell *matCellDef="let row" class="text-center text-capitalize"> {{ row.director }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="language">
+      <th mat-header-cell *matHeaderCellDef>Language</th>
+      <td mat-cell *matCellDef="let row" class="text-center text-capitalize"> {{ row.language }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="imdbRating">
+      <th mat-header-cell *matHeaderCellDef>Rating</th>
+      <td mat-cell *matCellDef="let row" class="text-center">{{ row.imdbRating }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="converting">
+      <th mat-header-cell *matHeaderCellDef>Converting</th>
+      <td mat-cell *matCellDef="let row" style="width: 15%;" class="text-center px-3">
+        <div class="progress position-relative" role="progressbar" aria-label="Info striped example" aria-valuenow="50"
+             *ngIf="row.status !== 'COMPLETED' && row.status !== null" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+               [style.width.%]="row.progress">
+          </div>
+          <span *ngIf="row.status === 'UPLOADING'">{{ row.status }}</span>
+          <span *ngIf="row.status === 'PREPARING'">{{ row.status }}</span>
+          <span *ngIf="row.status === 'CONVERTING'">{{ row.progress }}% - {{ row.status }}</span>
+          <span *ngIf="row.status === 'SAVING'">{{ row.progress }}% - {{ row.status }}</span>
+        </div>
+
+        <div class="progress position-relative" role="progressbar" aria-label="Info striped example" aria-valuenow="50"
+             *ngIf="row.status == 'COMPLETED'" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+               style="width: 100%;"></div>
+          <span class="text-white">{{ row.status }}</span>
+        </div>
+
+        <div class="progress position-relative" role="progressbar" aria-label="Info striped example" aria-valuenow="50"
+             *ngIf="row.status === null" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar progress-bar-striped progress-bar-animated text-dark bg-warning"
+               style="width: 100%;"></div>
+          <span>Hasn’t started yet or error.</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let row" style="width: 10%;" class="text-center px-3">
+        <div class="btn-group">
+          <button class="btn btn-warning rounded-1 btn-sm" routerLink="/admin/movies/edit"
+                  [queryParams]="{id: row.id}" [disabled]="row.status !== 'COMPLETED'">
+            <i class="bi bi-pencil"></i>
+          </button>
+
+          <div class="px-2"></div>
+
+          <button class="btn btn-danger rounded-1 btn-sm" routerLink="/admin/movies/delete"
+                  [queryParams]="{id: row.id, title: row.title}" [disabled]="row.status !== 'COMPLETED'">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-between align-content-center">
+
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell text-center fs-5 roboto-medium text-secondary p-5" colspan="9">
+        No data loading
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSize]="5" [length]="totalRecords" [pageSizeOptions]="[5, 10, 25]">
+  </mat-paginator>
+</div>
+<div class="alert text-danger bg-transparent rounded-0 py-1 px-0 my-1" style="font-size: 12px;">
+  *NB: If the converting hasn't start yet wait 60s and refresh, or contact support.
+</div>
+<router-outlet></router-outlet>

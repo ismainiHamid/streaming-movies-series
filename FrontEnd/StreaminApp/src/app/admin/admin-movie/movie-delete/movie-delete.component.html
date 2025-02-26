@@ -1,0 +1,36 @@
+<div class="modal fade show d-block" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+
+      <div class="modal-header border-0 py-1 px-3 d-flex flex-wrap justify-content-between align-content-center">
+        <h5 class="modal-title m-0">{{ movieTitle }}</h5>
+        <button type="button" class="btn btn rounded-circle modal-btn-close border-0 p-1"
+                (click)="closeModal()">
+          <i class="zmdi zmdi-close"></i>
+        </button>
+      </div>
+
+      <div class="modal-body py-2 px-3">
+        <p class="text-danger mb-1"><strong>Are you sure you want to delete the movie '{{movieTitle}}' ?</strong></p>
+        <p class="mb-1">This action will permanently remove the movie and all its associated data,
+          including ratings, genre, and any related information. Once deleted, this cannot be undone.</p>
+        <p class="text-muted"><i>If you’re certain, please confirm to proceed with deleting the movie.</i></p>
+      </div>
+
+      <div class="modal-footer border-0 d-flex flex-wrap justify-content-end gap-2 py-1 px-2 align-content-center">
+        <button type="button" class="btn btn-danger btn-sm border-0 px-4"
+                (click)="onClickDelete()" [disabled]="isLoading">
+          <span *ngIf="!isLoading"><i class="zmdi zmdi-delete pe-2"></i>Force delete</span>
+          <span *ngIf="isLoading">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop fade show"></div>
+</div>

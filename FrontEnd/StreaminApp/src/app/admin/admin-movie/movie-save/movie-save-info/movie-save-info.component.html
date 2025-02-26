@@ -1,0 +1,189 @@
+<div class="modal-header border-0 d-flex flex-wrap justify-content-between align-content-center">
+  <nav class="nav">
+    <p class="nav-link active"><span><i class="zmdi zmdi-check-all"></i></span>Information</p>
+    <p class="nav-link"><span><i class="zmdi zmdi-check-all"></i></span>Assignment</p>
+    <p class="nav-link"><span><i class="zmdi zmdi-check-all"></i></span>Subtitles</p>
+    <p class="nav-link"><span><i class="zmdi zmdi-check-all"></i></span>Upload</p>
+  </nav>
+  <button type="button" class="btn btn rounded-circle modal-btn-close border-0 p-1"
+          (click)="closeModal()">
+    <i class="zmdi zmdi-close"></i>
+  </button>
+</div>
+
+<form (ngSubmit)="ngSubmit()" [formGroup]="formGroup">
+  <div class="modal-body">
+    <div class="body-content">
+      <div class="row g-0">
+        <div class="col-md-4 pe-2">
+          <label for="imdbId" class="form-label">Imdb ID <span class="text-muted">(optional)</span></label>
+          <input type="text" id="imdbId" name="imdbId" formControlName="imdbId"
+                 class="form-control form-control-sm rounded-1" (keyup)="onKeyUpImdbID()"
+                 minlength="9" maxlength="10">
+          <div id="imdbIdHelp" class="form-text">
+             <span *ngIf="error.code === 404 || error.code === 402" class="text-danger">
+              {{ error.message }}
+            </span>
+            <span *ngIf="error.code !== 404 && error.code !== 402">
+              Insert movie imdb id <span class="text-muted">(ex:tt3659388)</span>.
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+          <input type="text" id="title" name="title" formControlName="title" required minlength="5" maxlength="50"
+                 class="form-control form-control-sm rounded-1 {{error.code === 409 ? 'border-danger' : ''}}"
+                 (keyup)="onKeyUpTitle()">
+          <div id="titleHelp" class="form-text">
+            <span *ngIf="error.code === 409" class="text-danger">
+              {{ error.message }}
+            </span>
+            <span *ngIf="error.code !== 409">
+              Insert movie title, maxlength is 50 and minlength is 5.
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="poster" class="form-label">Poster <span class="text-danger">*</span></label>
+          <div class="file-upload-container"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave($event)"
+               (drop)="onDrop($event)"
+               [class.dragging]="isDragging">
+            <label for="poster" class="file-upload">
+              <div *ngIf="fileName.length === 0">
+                <div class="upload-icon mb-2">
+                  <i class="zmdi zmdi-upload"></i>
+                </div>
+                <span>Drag & Drop your file here or <strong>Click to Upload</strong></span>
+                <input type="file"
+                       id="poster"
+                       accept="image/jpeg, image/png"
+                       name="poster"
+                       (change)="onFileSelected($event)" required/>
+              </div>
+
+              <div class="card border-0 shadow-sm" *ngIf="fileName.length > 0"
+                   [style.background-image]="'url(' + safeUrlPoster + ')'">
+                <div class="card-close">
+                  <button type="button" class="btn border-0" (click)="onCloseCard()">
+                    <i class="zmdi zmdi-close"></i>
+                  </button>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div id="posterHelp" class="form-text">Drag & Drop or Click to Upload.</div>
+        </div>
+
+        <div class="col-md-8">
+          <div class="row g-0">
+            <div class="col-md-12">
+              <label for="thumbnail" class="form-label">Thumbnail <span class="text-danger">*</span></label>
+              <div class="thumbnail-file-input-container form-control form-control-sm rounded-1">
+                <div class="thumbnail-file-input">
+                  <button class="btn btn-primary rounded-1 btn-sm">Choose Thumbnail</button>
+                  <input type="file" id="thumbnail" (change)="onFileSelectedThumbnail($event)">
+                </div>
+                <span class="thumbnail-file-name" id="thumbnail-file-name">
+                  {{ selectedThumbnailFileName || 'No thumbnail chosen' }}
+                </span>
+              </div>
+              <div id="thumbnailHelp" class="form-text">Select movie languages max 4.</div>
+            </div>
+
+            <div class="col-md-12">
+              <label for="list-languages" class="form-label">Language <span class="text-danger">*</span></label>
+              <div class="input-group input-group-sm border rounded-1 position-relative">
+                <div class="p-1" *ngFor="let language of selectedLanguages">
+              <span class="badge border-0 rounded-1 text-capitalize text-bg-light">
+                {{ language }}
+                <span class="btn border-0" (click)="onRemoveLanguage(language)">
+                  <i class="zmdi zmdi-close"></i>
+                </span>
+              </span>
+                </div>
+
+                <input class="form-control form-control-sm rounded-1 border-0" list="list-languages" name="languages"
+                       type="text" id="languages" placeholder="Select movie languages ..."
+                       (change)="onAddLanguage($event)">
+                <datalist id="list-languages">
+                  <option *ngFor="let language of LANGUAGES" [value]="language.name"></option>
+                </datalist>
+              </div>
+              <div id="languagesHelp" class="form-text">Select movie languages max 4.</div>
+            </div>
+
+            <div class="col-md-6 pe-1">
+              <label for="released" class="form-label">Released <span class="text-danger">*</span></label>
+              <input type="date" id="released" name="released" formControlName="released" required
+                     class="form-control form-control-sm rounded-1">
+              <div id="releasedHelp" class="form-text">Insert movie released date.</div>
+            </div>
+
+            <div class="col-md-6 ps-1">
+              <label for="runtime" class="form-label">Runtime <span class="text-danger">*</span></label>
+              <input type="text" id="runtime" name="runtime" formControlName="runtime" required
+                     class="form-control form-control-sm rounded-1" minlength="4" maxlength="25">
+              <div id="runtimeHelp" class="form-text">Insert movie runtime.</div>
+            </div>
+
+            <div class="col-md-6 pe-1">
+              <label for="director" class="form-label">Director <span class="text-danger">*</span></label>
+              <input type="text" id="director" name="director" formControlName="director" required
+                     class="form-control form-control-sm rounded-1" minlength="4" maxlength="25">
+              <div id="directorHelp" class="form-text">Insert movie director.</div>
+            </div>
+
+            <div class="col-md-6 ps-1">
+              <label for="imdbRating" class="form-label">Imdb Rating <span class="text-danger">*</span></label>
+              <input type="text" id="imdbRating" name="imdbRating" formControlName="imdbRating"
+                     class="form-control form-control-sm rounded-1" (keyup)="onKeyUpImdbID()"
+                     minlength="3" maxlength="4">
+              <div id="imdbRatingHelp" class="form-text">
+                Insert movie imdb rating <span class="text-muted">(ex: 8.5)</span>.
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label for="plot" class="form-label">Plot <span class="text-danger">*</span></label>
+              <textarea class="form-control form-control-sm rounded-1" id="plot" name="plot"
+                        formControlName="plot" rows="3" minlength="10" maxlength="500" required>
+              </textarea>
+              <div id="plotHelp" class="form-text">
+                Insert small plot from the movie. min length: 10, max length: 500.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer border-0 d-flex flex-wrap justify-content-end gap-2 align-content-center">
+    <button type="reset" class="btn btn-danger btn-sm border-0 px-4" (click)="onRestForm()">
+      <i class="bi bi-arrow-clockwise pe-2"></i>Reset
+    </button>
+
+    <button type="button" class="btn btn-imdb btn-sm border-0" [class.isLoading]="isImdbLoading"
+            (click)="getMovieDetailsByImdbId()" [disabled]="!isImdbInputValid() || isImdbLoading">
+      <span *ngIf="!isImdbLoading"><img src="./assets/icons/imdb.svg" alt=""></span>
+      <div class="spinner-border text-dark" role="status" *ngIf="isImdbLoading">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </button>
+
+    <span *ngIf="movieId === null">
+      <button type="submit" class="btn btn-primary btn-sm border-0 px-4" [disabled]="!isFormValid() || isLoading">
+        <span *ngIf="!(isLoading && error.code !== 0)"><i class="bi bi-floppy pe-2"></i>Save</span>
+        <span *ngIf="isLoading && error.code !== 0">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </span>
+      </button>
+    </span>
+  </div>
+</form>

@@ -1,0 +1,86 @@
+<div class="container-fluid p-0">
+  <div class="sidebar-container" [ngClass]="{'collapsed': isSidebarCollapsed}">
+    <div class="sidebar shadow-sm">
+      <div class="navbar-brand">
+        C
+        <span *ngIf="!isSidebarCollapsed">ineWave</span>
+      </div>
+      <a routerLink="/admin/dashboard" routerLinkActive="active">
+        <div class="row">
+          <div class="col-md-2 icon">
+            <i class="bi bi-speedometer"></i>
+          </div>
+          <div class="col-md-10 text">
+            Dashboard
+          </div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/movies" routerLinkActive="active">
+        <div class="row">
+          <div class="col-md-2 icon">
+            <i class="bi bi-film"></i>
+          </div>
+          <div class="col-md-10 text">
+            Movies
+          </div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/series" routerLinkActive="active">
+        <div class="row">
+          <div class="col-md-2 icon">
+            <i class="bi bi-camera-reels"></i>
+          </div>
+          <div class="col-md-10 text">
+            Series
+          </div>
+        </div>
+      </a>
+
+      <a routerLink="/admin/users" routerLinkActive="active">
+        <div class="row">
+          <div class="col-md-2 icon">
+            <i class="bi bi-person-circle"></i>
+          </div>
+          <div class="col-md-10 text">
+            Users
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <nav class="navbar shadow-sm" [ngClass]="{'main-content': true, 'shifted': isSidebarCollapsed}">
+    <div class="container-fluid px-4">
+      <div class="navbar-nav me-auto">
+        <button class="btn border-0 btn-light px-4 rounded-pill" style="max-width: 200px; width: auto; min-width: 50px;"
+                (click)="toggleSidebar()">
+          <i class="bi bi-three-dots-vertical" *ngIf="isSidebarCollapsed"></i>
+          <i class="bi bi-three-dots" *ngIf="!isSidebarCollapsed"></i>
+          <strong class="ps-4 text-muted small">/
+            <span class="text-capitalize">{{ pageName }}</span>
+          </strong>
+        </button>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+        <button type="button" class="btn btn-account">
+          HI
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main [ngClass]="{'main-content': true, 'shifted': isSidebarCollapsed}" class="bg-gray p-4 pb-0">
+    <div class="d-flex flex-column justify-content-between">
+      <div class="main">
+        <router-outlet></router-outlet>
+      </div>
+
+      <div class="footer bg-gray text-center mt-4 bottom-0">
+        <p class="pt-4 pb-2">&copy; 2024 Hamid Ismaini. All rights reserved.</p>
+      </div>
+    </div>
+  </main>
+</div>

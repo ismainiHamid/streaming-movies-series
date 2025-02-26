@@ -1,0 +1,244 @@
+.btn {
+  width: fit-content;
+}
+
+.spinner-border {
+  --bs-spinner-width: 1rem !important;
+  --bs-spinner-height: 1rem !important;
+  --bs-spinner-border-width: 0.15em !important;
+}
+
+.btn-primary {
+  border-color: rgba(0, 178, 255, 1) !important;
+  background-color: rgba(0, 178, 255, 1) !important;
+}
+
+.btn-primary:hover {
+  background-color: rgba(0, 161, 255, 1) !important;
+}
+
+.btn-danger {
+  background-color: #B62020 !important;
+}
+
+.btn-danger:hover {
+  background-color: #A31C1C !important;
+}
+
+.btn-imdb {
+  background-color: #f5c518;
+  padding: 0 20px 3px 20px !important;
+  height: 29px !important;
+  transition: .4s;
+}
+
+.btn-imdb.isLoading {
+  padding: 5px 20px 3px 20px !important;
+}
+
+.btn-imdb:hover {
+  background-color: #e2b616;
+}
+
+.modal-header {
+  margin-bottom: 0 !important;
+  padding: .5rem .75rem !important;
+  border-bottom: 1px solid var(--bs-gray-200) !important;
+}
+
+.modal-footer {
+  margin-top: 0 !important;
+  padding: .25rem .75rem !important;
+  border-top: 1px solid var(--bs-gray-200) !important;
+}
+
+.modal-body, .modal-header, .modal-footer {
+  border-radius: 0 !important;
+  background-color: #fff;
+}
+
+.modal-body {
+  max-height: 74vh !important;
+  padding: .25rem !important;
+}
+
+.div-disabled {
+  pointer-events: none !important;
+}
+
+.body-content {
+  overflow-y: auto !important;
+  max-height: 72vh !important;
+  padding: 0 .75rem !important;
+}
+
+.nav .nav-link {
+  font-size: 12px !important;
+  font-weight: 600;
+  padding: 0 20px 0 0 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
+.nav .nav-link.active, .nav .nav-link.active:hover {
+  color: rgba(0, 178, 255, 1) !important;
+}
+
+.nav .nav-link, .nav .nav-link:hover {
+  color: var(--bs-gray-500) !important;
+}
+
+.nav .nav-link span {
+  border-width: .085rem;
+  border-style: solid;
+  padding: 4px 5px;
+  border-radius: 50%;
+  margin-right: 5px;
+  font-size: 11px;
+}
+
+.nav .nav-link.active span {
+  border-color: rgba(0, 178, 255, 1) !important;
+  background-color: rgba(0, 178, 255, 1);
+  color: #FFFFFF;
+}
+
+.nav .nav-link span {
+  border-color: var(--bs-gray-500) !important;
+}
+
+.file-upload-container {
+  height: calc(100% - 50px);
+}
+
+.file-upload {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: calc(100% - .5rem) !important;
+  height: 100%;
+  border: .1rem dashed var(--bs-border-color);
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  padding: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.file-upload:hover {
+  border-color: rgba(0, 178, 255, 1);
+}
+
+.file-upload .upload-icon {
+  width: fit-content !important;
+  font-size: 20px;
+  color: rgba(0, 178, 255, 1);
+  margin: 0 auto 0 auto;
+  border: 1px solid rgba(0, 178, 255, 1);
+  padding: 4px 10px;
+  border-radius: 50%;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.file-upload strong {
+  color: rgba(0, 178, 255, 1);
+}
+
+.file-upload .upload-error {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 15px 0 0 0 !important;
+}
+
+.thumbnail-file-input-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.thumbnail-file-input {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.thumbnail-file-input input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+}
+
+.thumbnail-file-input button {
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer !important;
+}
+
+.thumbnail-file-name {
+  font-size: 12px;
+}
+
+.card {
+  cursor: initial !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-position: center;
+  background-size: cover;
+  border-radius: 3px !important;
+}
+
+.card:hover {
+  border-color: rgba(0, 178, 255, 1);
+}
+
+.card .card-close {
+  padding-top: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.card .card-close .btn {
+  border-radius: 50%;
+  background-color: rgba(233, 236, 239, .5);
+  font-size: 12px;
+  padding: 1px 5px 0 5px !important;
+  margin: 5px 5px 0 0 !important;
+  transition: .4s;
+}
+
+.card .card-close .btn:hover {
+  background-color: var(--bs-gray-200) !important;
+}
+
+.card .card-content {
+  padding: 0 !important;
+}
+
+.badge {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: .15rem .5rem !important;
+  font-size: 11px;
+}
+
+.badge .btn {
+  font-size: 12px;
+  padding: 0 0 0 .75rem !important;
+}

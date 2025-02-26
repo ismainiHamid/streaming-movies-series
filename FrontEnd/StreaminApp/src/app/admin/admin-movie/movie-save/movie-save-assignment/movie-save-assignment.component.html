@@ -1,0 +1,108 @@
+<div class="modal-header border-0 d-flex flex-wrap justify-content-between align-content-center">
+  <nav class="nav">
+    <p class="nav-link done"><span><i class="zmdi zmdi-check-all"></i></span>Information</p>
+    <p class="nav-link active"><span><i class="zmdi zmdi-check-all"></i></span>Assignment</p>
+    <p class="nav-link"><span><i class="zmdi zmdi-check-all"></i></span>Subtitles</p>
+    <p class="nav-link"><span><i class="zmdi zmdi-check-all"></i></span>Upload</p>
+  </nav>
+  <button type="button" class="btn btn rounded-circle modal-btn-close border-0 p-1"
+          (click)="closeModal()">
+    <i class="zmdi zmdi-close"></i>
+  </button>
+</div>
+
+
+<form (ngSubmit)="ngSubmit()" [formGroup]="formGroup">
+  <div class="modal-body">
+    <div class="body-content">
+      <div class="row" [class.div-disabled]="isLoading">
+        <div class="col-md-12 mb-2">
+          <label for="genres" class="form-label">
+            Genres({{ genresIdsSelected.size }}) <span class="text-danger">*</span>
+          </label>
+
+          <input class="form-control form-control-sm mb-1 rounded-1" id="genres"
+                 name="genres" formControlName="genres" placeholder="Search for genre..."
+                 (input)="filterGenreByName($event)">
+
+          <ul class="list-group border rounded-1 position-relative"
+              [class.overflow-hidden]="isGenreLoading" id="list-genres">
+            <div class="loading h-100 position-absolute top-0" *ngIf="isGenreLoading">
+              <div class="spinner-border text-dark-emphasis" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <div class="row g-0">
+              <div class="col-md-4" *ngFor="let genre of genres">
+                <li class="list-group-item">
+                  <input class="form-check-input me-2" name="{{genre.name}}" type="checkbox"
+                         [value]="genre" id="{{'genre_' + genre.name}}"
+                         (change)="onGenreCheckboxChange($event, genre.id ?? '')"
+                         [checked]="isGenreChecked(genre.id ?? '')">
+                  <label class="form-check-label stretched-link" for="{{'genre_' + genre.name}}">
+                    {{ genre.name }}
+                  </label>
+                </li>
+              </div>
+            </div>
+          </ul>
+
+          <div id="genreHelp" class="form-text">
+            Search for genres by name and add at least one.
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label for="actors" class="form-label">
+            Actors({{ actorsIdsSelected.size }}) <span class="text-danger">*</span>
+          </label>
+
+          <input class="form-control form-control-sm mb-1 rounded-1" id="actors"
+                 name="actors" formControlName="actors" placeholder="Search for actor..."
+                 (input)="filterActorByName($event)">
+
+          <ul class="list-group border rounded-1 position-relative"
+              [class.overflow-hidden]="isActorLoading" id="list-actors">
+            <div class="loading h-100 position-absolute top-0" *ngIf="isActorLoading">
+              <div class="spinner-border text-dark-emphasis" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <div class="row g-0">
+              <div class="col-md-4" *ngFor="let actor of actors">
+                <li class="list-group-item">
+                  <input class="form-check-input me-2" type="checkbox" [value]="actor"
+                         name="{{actor.name}}" id="{{'actor_' + actor.name}}"
+                         (change)="onActorCheckboxChange($event, actor.id ?? '')"
+                         [checked]="isActorChecked(actor.id ?? '')">
+                  <label class="form-check-label stretched-link" for="{{'actor_' + actor.name}}">
+                    {{ actor.name }}
+                  </label>
+                </li>
+              </div>
+            </div>
+          </ul>
+
+          <div id="actorHelp" class="form-text">
+            Search for actors by name and add at least one.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer border-0 d-flex flex-wrap justify-content-end gap-2 align-content-center">
+    <button type="reset" class="btn btn-danger btn-sm border-0 px-4" (click)="onRestForm()">
+      <i class="bi bi-arrow-clockwise pe-2"></i>Reset
+    </button>
+
+    <button type="submit" class="btn btn-primary btn-sm border-0 px-4" [disabled]="!isFormValid() || isLoading">
+      <span *ngIf="!isLoading"><i class="bi bi-floppy pe-2"></i>Save</span>
+      <span *ngIf="isLoading">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </span>
+    </button>
+  </div>
+</form>

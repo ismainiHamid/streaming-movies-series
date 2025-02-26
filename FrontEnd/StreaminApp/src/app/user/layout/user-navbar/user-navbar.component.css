@@ -1,0 +1,143 @@
+.btn-primary {
+  border: 1px solid rgba(0, 161, 255, 1) !important;
+  color: rgba(255, 255, 255, 1) !important;
+  background-color: rgba(0, 178, 255, 1) !important;
+}
+
+.btn-primary:hover {
+  color: rgba(255, 255, 255, 1) !important;
+  background-color: rgba(0, 161, 255, 1) !important;
+}
+
+.navbar {
+  background: rgba(0, 0, 0, 0);
+  background: linear-gradient(180deg, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 0) 100%);
+  padding: 1.5rem 0 !important;
+  transition: .4s;
+}
+
+.navbar.scrolled {
+  background-color: rgba(0, 0, 0, 1);
+  padding: .75rem 0 !important;
+}
+
+.navbar-brand {
+  font-family: "Pacifico", serif;
+  font-size: 45px;
+  font-weight: 700;
+  color: rgba(0, 178, 255, 1);
+}
+
+.navbar-brand span {
+  font-size: 25px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.navbar-search {
+  position: relative;
+}
+
+.navbar-search input {
+  background-color: rgba(33, 37, 41, .85) !important;
+  border-color: rgba(255, 255, 255, .35);
+}
+
+.search-bar input + i {
+  position: absolute;
+  top: .5rem;
+  right: 0;
+  width: 30px;
+  color: rgba(255, 255, 255, .5);
+  font-size: 22px;
+}
+
+.search-bar input:focus + i, .search-bar input:active + i {
+  color: rgba(0, 178, 255, 1) !important;
+}
+
+.search-result {
+  position: absolute;
+  width: 100%;
+  margin-top: 5px;
+  padding: 0 0;
+  border: 1px solid rgba(255, 255, 255, .25) !important;
+  background-color: rgba(33, 37, 41, 1);
+}
+
+.nav-link {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, .75) !important;
+  transition: .4s;
+}
+
+.nav-link:hover {
+  font-weight: 700 !important;
+  color: rgba(255, 255, 255, .85) !important;
+}
+
+.nav-link.active {
+  font-weight: 700 !important;
+  color: rgba(255, 255, 255, .95) !important;
+}
+
+.navbar-nav .btn {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px !important;
+  flex: none;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+}
+
+.navbar-nav .btn i {
+  font-size: 18px !important;
+}
+
+.lazy-image {
+  width: 100%;
+  max-height: 80px;
+  object-fit: cover;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.placeholder {
+  width: 100%;
+  height: 80px;
+}
+
+.card {
+  border: none !important;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.card.border {
+  border-width: 0 0 1px 0 !important;
+  border-color: rgba(255, 255, 255, .25) !important;
+  border-style: solid !important;
+}
+
+.card:hover {
+  background-color: rgba(255, 255, 255, .05);
+}
+
+.card-title {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: rgba(0, 178, 255, 1);
+  line-height: 30px;
+}
+
+.card-type {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, .75) !important;
+}
+
+.card-actor {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 1) !important;
+}

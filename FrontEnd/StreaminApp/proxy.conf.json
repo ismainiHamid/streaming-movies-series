@@ -1,0 +1,9 @@
+{
+  "/cinewave/api": {
+    "target": "http://localhost:7070",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "ws": true
+  }
+}
